@@ -76,13 +76,14 @@ for data in datasety:
         #Konfiguracja hiperparametrów treningu i integracji logowania
         training_args = TrainingArguments(
             output_dir=f"./wyniki_{data['nazwa']}", #Ścieżka dla checkpointów
-            num_train_epochs=3,                     #Liczba epok
+            num_train_epochs=2,                     #Liczba epok zmieniona na 2 zamiast 3 przez overfitting
             per_device_train_batch_size=16,         #Wielkość paczki treningowej
             per_device_eval_batch_size=16,          #Wielkość paczki walidacyjnej
             eval_strategy="epoch",                  #Walidacja po każdej epoce
-            learning_rate=3e-5,                     #Współczynnik uczenia
+            learning_rate=2e-5,                     #Współczynnik uczenia
             report_to="mlflow",                     #Wymuszenie wysyłania logów do DagsHuba/MLflow
-            logging_steps=10                        #Częstotliwość raportowania metryk
+            logging_steps=10,                        #Częstotliwość raportowania metryk
+            weight_decay=0.01
         )
 
         #Obiekt Trainer zarządza pętlą treningową, optymalizatorem i ewaluacją
