@@ -62,6 +62,8 @@ for data in datasety:
     #kolumny i drop na
     df = df[[data['text'], data['label']]].dropna()
 
+    df = df.drop_duplicates(subset=[data['text']], keep='first') #usuwamy duplikaty
+
     #ograniczenie zbioru do max 2000 losowych próbek
     #df = df.sample(n=min(2000, len(df)), random_state=42)
 
@@ -115,14 +117,17 @@ for data in datasety:
             num_train_epochs=2,
             per_device_train_batch_size=16,
             per_device_eval_batch_size=16,
-            eval_strategy="epoch",                   
+            eval_strategy="steps",               
+            eval_steps=50,                       
+            save_strategy="steps",               
+            save_steps=50,
             learning_rate=2e-5,
             report_to="mlflow",
             logging_steps=10,
-            weight_decay=0.01
+            weight_decay=0.01      
         )
 
-        #Obiekt Trainer
+        
         trainer = Trainer(
             model=model,
             args=training_args,
@@ -131,13 +136,11 @@ for data in datasety:
             compute_metrics=compute_metrics          
         )
 
-        print(f"Odpalamy trening na danych {data['csv_nazwa']}...")
+        print(f"trening na danych {data['csv_nazwa']}...")
         trainer.train()
 
-        #Ręczne wywołanie ewaluacji na koniec treningu i wysłanie ostatecznych wyników do MLflow
         trainer.evaluate()
 
-        #Zwolnienie zasobów karty graficznej
         del model
         del trainer
         import gc
