@@ -17,8 +17,8 @@ os.system("kaggle datasets download -d nitishabharathi/email-spam-dataset --unzi
 
 datasety = [
     {"nazwa": "Exp_1_SpamAssassin", "csv_nazwa": "completeSpamAssassin.csv", "text": "Body", "label": "Label"},
-    {"nazwa": "Exp_2_Enron",        "csv_nazwa": "enronSpamSubset.csv",      "text": "Body", "label": "Label"},
-    {"nazwa": "Exp_3_LingSpam",     "csv_nazwa": "lingSpam.csv",             "text": "Body", "label": "Label"}
+    {"nazwa": "Exp_2_Enron", "csv_nazwa": "enronSpamSubset.csv", "text": "Body", "label": "Label"},
+    {"nazwa": "Exp_3_LingSpam", "csv_nazwa": "lingSpam.csv", "text": "Body", "label": "Label"}
 ]
 
 #klasa konwertująca surowe tokeny i etykiety na tensory wymagane przez bibliotekę PyTorch
@@ -72,7 +72,7 @@ for data in datasety:
     labels = le.fit_transform(df[data['label']])
     texts = df[data['text']].astype(str).tolist()
 
-    #podział na zbiór treningowy (80%) i walidacyjny (20%)
+    #podział na zbiór treningowy i walidacyjny 4 do 1
     #train_texts, val_texts, train_labels, val_labels = train_test_split(texts, labels, test_size=0.2, random_state=42)
 
     #stratified sampling pomoże z imbalansem danych (np. Lingspam mógł się uczyć na samym hamie w teorii)
@@ -86,7 +86,7 @@ for data in datasety:
 )
 
     #tokenizacja
-    train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=128)
+    train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=128) #ucinanie za duzych true, padding wiadomo 
     val_encodings = tokenizer(val_texts, truncation=True, padding=True, max_length=128)
 
     #Pytorch wymaga takiego czegoś
