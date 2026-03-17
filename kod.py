@@ -78,11 +78,11 @@ for data in datasety:
     #stratified sampling pomoże z imbalansem danych (np. Lingspam mógł się uczyć na samym hamie w teorii)
 
     train_texts, val_texts, train_labels, val_labels = train_test_split(
-    texts, 
-    labels, 
-    test_size=0.2, 
-    random_state=42, 
-    stratify=labels  
+    texts,
+    labels,
+    test_size=0.2,
+    random_state=42,
+    stratify=labels
 )
 
     #tokenizacja
@@ -93,47 +93,47 @@ for data in datasety:
     train_dataset = SpamDataset(train_encodings, train_labels)
     val_dataset = SpamDataset(val_encodings, val_labels)
 
-    
-    with mlflow.start_run(run_name=(data['nazwa'])+' stratified, zamrożone 8, pełne dane'):
+
+    with mlflow.start_run(run_name=(data['nazwa'])+' stratified, zamrożone 5, pełne dane'):
 
         #pobranie berta i dodanie warstwy do klasyfikacji z 2 labels - 2 klasy
         model = AutoModelForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2) #Mozna usunac '#' poniżej żeby trenować tylko warstwę klasyfikacyjną, wypada do tego zwiększyć learning_rate do 2e-3
         #for param in model.bert.parameters():
           #param.requires_grad = False
 
-        #zapobiegamy niszczeniu słownika 
+        #zamrażamy pierwszą warstwę
         for param in model.bert.embeddings.parameters():
             param.requires_grad = False
-            
-        #Zamrażamy pierwsze 8 warstw 
-        warstwy_do_zamrozenia = 8
+
+        #Zamrażamy pierwsze 5 warstw, zmienną można zmieniać
+        warstwy_do_zamrozenia = 5
         for i in range(warstwy_do_zamrozenia):
             for param in model.bert.encoder.layer[i].parameters():
                 param.requires_grad = False
 
-        
+
         training_args = TrainingArguments(
             output_dir=f"./wyniki_{data['nazwa']}",
             num_train_epochs=2,
             per_device_train_batch_size=16,
             per_device_eval_batch_size=16,
-            eval_strategy="steps",               
-            eval_steps=50,                       
-            save_strategy="steps",               
+            eval_strategy="steps",
+            eval_steps=50,
+            save_strategy="steps",
             save_steps=50,
             learning_rate=2e-5,
             report_to="mlflow",
             logging_steps=10,
-            weight_decay=0.01      
+            weight_decay=0.01
         )
 
-        
+
         trainer = Trainer(
             model=model,
             args=training_args,
             train_dataset=train_dataset,
             eval_dataset=val_dataset,
-            compute_metrics=compute_metrics          
+            compute_metrics=compute_metrics
         )
 
         print(f"trening na danych {data['csv_nazwa']}...")
