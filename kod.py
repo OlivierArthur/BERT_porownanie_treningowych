@@ -124,7 +124,7 @@ for data in datasety:
             learning_rate=2e-5,
             report_to="mlflow",
             logging_steps=10,
-            weight_decay=0.01
+            weight_decay=0.01,
             save_total_limit=1
         )
 
