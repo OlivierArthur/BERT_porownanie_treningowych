@@ -91,8 +91,8 @@ for data in datasety:
 )
 
     #tokenizacja
-    train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=128) #ucinanie za duzych true, padding wiadomo
-    val_encodings = tokenizer(val_texts, truncation=True, padding=True, max_length=128)
+    train_encodings = tokenizer(train_texts, truncation=True, padding=True, max_length=512)
+    val_encodings = tokenizer(val_texts, truncation=True, padding=True, max_length=512)
 
     #Pytorch wymaga takiego czegoś
     train_dataset = SpamDataset(train_encodings, train_labels)
@@ -119,16 +119,17 @@ for data in datasety:
 
         training_args = TrainingArguments(
             output_dir=f"./wyniki_{data['nazwa']}",
-            num_train_epochs=4,
-            per_device_train_batch_size=16,
-            per_device_eval_batch_size=16,
+            num_train_epochs=3,
+            per_device_train_batch_size=8,
+            per_device_eval_batch_size=8,
             eval_strategy="epoch",
             save_strategy="epoch",
             learning_rate=2e-5,
             report_to="mlflow",
             logging_steps=10,
             weight_decay=0.01,
-            save_total_limit=1
+            save_total_limit=1,
+            warmup_ratio=0.1
         )
 
 
