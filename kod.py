@@ -40,13 +40,9 @@ class SpamDataset(torch.utils.data.Dataset):
 tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
 def compute_metrics(p: EvalPrediction):
-    probs = scipy.special.softmax(p.predictions, axis=1)
-
-    threshold = 0.75
-    preds = (probs[:, 1] > threshold).astype(int)
-
+    logits = p.predictions
     labels = p.label_ids
-
+    preds = np.argmax(logits, axis=1)
     acc = accuracy_score(labels, preds)
     precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average='binary')
 
