@@ -17,8 +17,8 @@ mlflow.set_experiment("BERT_Testowanie_3epoki")
 device = 0 if torch.cuda.is_available() else -1
 
 df_pom = [
-    {"nazwa": "Exp_1_SpamAssassin/checkpoint-795"},
-    {"nazwa": "Exp_2_Enron/checkpoint-1455"},
+    {"nazwa": "Exp_1_SpamAssassin/checkpoint-1590"},
+    {"nazwa": "Exp_2_Enron/checkpoint-2907"},
     {"nazwa": "Exp_3_LingSpam/checkpoint-390"}
 ]
 
