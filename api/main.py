@@ -14,7 +14,7 @@ class EmailRequest(BaseModel):
 async def lifespan(app: FastAPI):
     model_id = "OliverArt5500/klasyfikatorspamu1"
     
-    logger.info("Ładowanie modelu AI...")
+    logger.info("ładowanie modelu")
     app.state.spam_classifier = pipeline("text-classification", model=model_id, tokenizer=model_id)
     logger.info("Model gotowy")
 
