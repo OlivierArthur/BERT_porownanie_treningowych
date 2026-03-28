@@ -6,7 +6,8 @@ Obraz na dockerze jest już stworzony i znajduje się na: https://hub.docker.com
 
 Jak korzystać ( używając dockera ):
 wpisać w terminalu
-docker run -d -p 8080:8000 --name spam-api oliverart5500/klasyfikatorspamu
+1. docker run -d -p 8080:8000 --name spam-api oliverart5500/klasyfikatorspamu
+2. na http://localhost:8080/docs będzie interaktyne GUI, do którego można wkleić maila
 
 
 
