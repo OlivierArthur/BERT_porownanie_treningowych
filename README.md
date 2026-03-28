@@ -1,18 +1,17 @@
-Konkretne parametry użyte podczas treningu można zobaczyć na https://huggingface.co/OliverArt5500/klasyfikatorspamu1 
+Konkretne parametry użyte podczas treningu modelu można zobaczyć tutaj: 
+https://huggingface.co/OliverArt5500/klasyfikatorspamu1
 
-W projekcie wykorzystano środowisko google colab z "!pip install evaluate".
+Model został wytrenowany z wykorzystaniem środowiska Google Colab (z użyciem `evaluate`, wymagane !pip install evaluate).
 
-Obraz na dockerze znajduje się tutaj: https://hub.docker.com/repository/docker/oliverart5500/klasyfikatorspamu/general
-
-Jak korzystać ( używając dockera ):
-wpisać w terminalu
-1. docker run -d -p 8080:8000 --name spam-api oliverart5500/klasyfikatorspamu
-2. na http://localhost:8080/docs będzie interaktyne GUI, do którego można wkleić maila
+Gotowy obraz środowiska znajduje się na Docker Hub: 
+https://hub.docker.com/repository/docker/oliverart5500/klasyfikatorspamu/general
 
 
+Aby uruchomić gotowy serwer z modelem, wpisz w terminalu poniższą komendę:
 
+docker run -d -p 8080:8000 --name spam-api oliverart5500/klasyfikatorspamu
 
-
+Na http://localhost:8080/docs będzie interkatywne GUI z włączonym klasyfikatorem.
 
 
 
