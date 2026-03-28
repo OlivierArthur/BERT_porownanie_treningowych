@@ -2,7 +2,7 @@ Konkretne parametry użyte podczas treningu można zobaczyć na https://huggingf
 
 W projekcie wykorzystano środowisko google colab z "!pip install evaluate".
 
-Obraz na dockerze jest już stworzony i znajduje się na: https://hub.docker.com/repository/docker/oliverart5500/klasyfikatorspamu/general
+Obraz na dockerze znajduje się tutaj: https://hub.docker.com/repository/docker/oliverart5500/klasyfikatorspamu/general
 
 Jak korzystać ( używając dockera ):
 wpisać w terminalu
