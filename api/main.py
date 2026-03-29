@@ -31,7 +31,7 @@ async def predict_spam(request: Request, payload: EmailRequest):
         raise HTTPException(status_code=400, detail="wiadomość nie może być pusta.")
 
     try:
-        # Pobieramy nasz model ze stanu aplikacji
+        #pobranie modelu
         classifier = request.app.state.spam_classifier
         
         # Wykonujemy predykcję
